@@ -122,7 +122,7 @@ require '../control/reg_control.php';
                     </table>
                 </form>
 
-                <p class="login-link">Already have an account? <a href="#">Login</a></p>
+                <p class="login-link">Already have an account? <a href="login.php">Login</a></p>
             </fieldset>
 
             <!-- Footer Links Section Below the Form -->

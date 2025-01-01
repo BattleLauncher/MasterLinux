@@ -4,6 +4,7 @@ require_once 'Database.php';
 // Initialize variables and error messages
 $errors = [];
 $user_data = [];
+$login_errors = [];
 $data_folder = '../data/';
 $json_file = $data_folder . 'userdata.json';
 
@@ -12,8 +13,10 @@ if (!is_dir($data_folder)) {
     mkdir($data_folder, 0777, true);
 }
 
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// ------------------------
+// Registration Section
+// ------------------------
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
     // Sanitize and validate inputs
     $user_data['first_name'] = filter_input(INPUT_POST, 'first-name', FILTER_SANITIZE_STRING);
     if (empty($user_data['first_name']) || strlen($user_data['first_name']) < 4 || !preg_match("/^[a-zA-Z]+$/", $user_data['first_name'])) {
@@ -63,20 +66,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $existing_data = json_decode(file_get_contents($json_file), true) ?? [];
         }
 
+        // Hash the password before storing it
+        $user_data['password'] = password_hash($user_data['password'], PASSWORD_DEFAULT);
+
         // Append new user data
         $existing_data[] = $user_data;
 
         // Write updated data back to the JSON file
         if (file_put_contents($json_file, json_encode($existing_data, JSON_PRETTY_PRINT))) {
-            echo "<p style='color:green;'>Data successfully saved.</p>";
+            echo "<p style='color:green;'>Registration successful! Please log in.</p>";
         } else {
-            echo "<p style='color:red;'>Failed to save data.</p>";
+            echo "<p style='color:red;'>Failed to save registration data.</p>";
         }
     } else {
-        // Display validation errors
         foreach ($errors as $error) {
             echo "<p style='color:red;'>$error</p>";
         }
     }
 }
+
+// ------------------------
+// Login Section
+// ------------------------
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
+    $email = filter_input(INPUT_POST, 'login_email', FILTER_VALIDATE_EMAIL);
+    $password = $_POST['login_password'];
+
+    if (empty($email) || empty($password)) {
+        $login_errors[] = "Email and password are required.";
+    } else {
+        if (file_exists($json_file)) {
+            $existing_data = json_decode(file_get_contents($json_file), true) ?? [];
+            $user_found = false;
+
+            foreach ($existing_data as $user) {
+                if ($user['email'] === $email && password_verify($password, $user['password'])) {
+                    $user_found = true;
+                    echo "<p style='color:green;'>Login successful! Welcome, {$user['first_name']}.</p>";
+                    break;
+                }
+            }
+
+            if (!$user_found) {
+                $login_errors[] = "Invalid email or password.";
+            }
+        } else {
+            $login_errors[] = "No registered users found.";
+        }
+    }
+
+    foreach ($login_errors as $error) {
+        echo "<p style='color:red;'>$error</p>";
+    }
+}
 ?>
+
