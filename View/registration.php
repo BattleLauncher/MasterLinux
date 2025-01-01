@@ -17,7 +17,7 @@ require '../control/reg_control.php';
                 <p>Join our platform to promote and increase your sales.</p>
 
                 <!-- Begin form with corrected structure -->
-                <form action="" method="post" enctype="multipart/form-data">
+                <form action="../control/reg_control.php" method="post" enctype="multipart/form-data" >
                     <!-- Personal Information Section with Fieldset and Legend -->
                     <fieldset>
                         <legend>Personal Information</legend>
