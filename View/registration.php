@@ -1,5 +1,6 @@
 <?php
-require '../control/reg_control.php';
+// Include the PHP validation script from the 'control' folder
+require_once '../control/reg_control.php';
 ?>
 
 <!DOCTYPE html>
@@ -7,6 +8,7 @@ require '../control/reg_control.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/style.css">
     <title>Create Startup Account</title>
 </head>
 <body>
@@ -17,44 +19,45 @@ require '../control/reg_control.php';
                 <p>Join our platform to promote and increase your sales.</p>
 
                 <!-- Begin form with corrected structure -->
-                <form action="../control/reg_control.php" method="post" enctype="multipart/form-data" >
+                <form action="registration.php" method="post" enctype="multipart/form-data">
+
                     <!-- Personal Information Section with Fieldset and Legend -->
                     <fieldset>
                         <legend>Personal Information</legend>
                         <table>
                             <tr>
                                 <td><label for="first-name">First Name:</label></td>
-                                <td><input type="text" id="first-name" name="first_name" placeholder="Enter your first name" required></td>
+                                <td><input type="text" id="first-name" name="first-name" placeholder="Enter your first name" value="<?php echo isset($_POST['first-name']) ? $_POST['first-name'] : ''; ?>" required></td>
                             </tr>
                             <tr>
                                 <td><label for="last-name">Last Name:</label></td>
-                                <td><input type="text" id="last-name" name="last_name" placeholder="Enter your last name" required></td>
+                                <td><input type="text" id="last-name" name="last-name" placeholder="Enter your last name" value="<?php echo isset($_POST['last-name']) ? $_POST['last-name'] : ''; ?>" required></td>
                             </tr>
                             <tr>
                                 <td><label for="gender">Gender:</label></td>
                                 <td>
                                     <select id="gender" name="gender" required>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="other">Other</option>
+                                        <option value="male" <?php echo (isset($_POST['gender']) && $_POST['gender'] == 'male') ? 'selected' : ''; ?>>Male</option>
+                                        <option value="female" <?php echo (isset($_POST['gender']) && $_POST['gender'] == 'female') ? 'selected' : ''; ?>>Female</option>
+                                        <option value="other" <?php echo (isset($_POST['gender']) && $_POST['gender'] == 'other') ? 'selected' : ''; ?>>Other</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label for="age">Age:</label></td>
-                                <td><input type="number" id="age" name="age" placeholder="Enter your age" required></td>
+                                <td><input type="number" id="age" name="age" placeholder="Enter your age" value="<?php echo isset($_POST['age']) ? $_POST['age'] : ''; ?>" required></td>
                             </tr>
                             <tr>
                                 <td><label for="email">Email Address:</label></td>
-                                <td><input type="email" id="email" name="email" placeholder="Enter your email address" required></td>
+                                <td><input type="email" id="email" name="email" placeholder="Enter your email address" value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>" required></td>
                             </tr>
                             <tr>
                                 <td><label for="phone">Phone Number:</label></td>
-                                <td><input type="tel" id="phone" name="phone" placeholder="Enter your contact number" required></td>
+                                <td><input type="tel" id="phone" name="phone" placeholder="Enter your contact number" value="<?php echo isset($_POST['phone']) ? $_POST['phone'] : ''; ?>" required></td>
                             </tr>
                             <tr>
                                 <td><label for="location">Location:</label></td>
-                                <td><input type="text" id="location" name="location" placeholder="Enter your business location" required></td>
+                                <td><input type="text" id="location" name="location" placeholder="Enter your business location" value="<?php echo isset($_POST['location']) ? $_POST['location'] : ''; ?>" required></td>
                             </tr>
                         </table>
                     </fieldset>
@@ -65,22 +68,22 @@ require '../control/reg_control.php';
                         <table>
                             <tr>
                                 <td><label for="business-name">Business Name:</label></td>
-                                <td><input type="text" id="business-name" name="business_name" placeholder="Enter your startup/business name" required></td>
+                                <td><input type="text" id="business-name" name="business-name" placeholder="Enter your startup/business name" value="<?php echo isset($_POST['business-name']) ? $_POST['business-name'] : ''; ?>" required></td>
                             </tr>
                             <tr>
                                 <td><label for="business-type">Business Type:</label></td>
                                 <td>
-                                    <select id="business-type" name="business_type" required>
-                                        <option value="ecommerce">E-commerce</option>
-                                        <option value="manufacturer">Product Manufacturer</option>
-                                        <option value="service">Service Provider</option>
-                                        <option value="other">Other</option>
+                                    <select id="business-type" name="business-type" required>
+                                        <option value="ecommerce" <?php echo (isset($_POST['business-type']) && $_POST['business-type'] == 'ecommerce') ? 'selected' : ''; ?>>E-commerce</option>
+                                        <option value="manufacturer" <?php echo (isset($_POST['business-type']) && $_POST['business-type'] == 'manufacturer') ? 'selected' : ''; ?>>Product Manufacturer</option>
+                                        <option value="service" <?php echo (isset($_POST['business-type']) && $_POST['business-type'] == 'service') ? 'selected' : ''; ?>>Service Provider</option>
+                                        <option value="other" <?php echo (isset($_POST['business-type']) && $_POST['business-type'] == 'other') ? 'selected' : ''; ?>>Other</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label for="website-url">Website URL (Optional):</label></td>
-                                <td><input type="url" id="website-url" name="website_url" placeholder="Enter your website URL (if applicable)"></td>
+                                <td><input type="url" id="website-url" name="website-url" placeholder="Enter your website URL (if applicable)" value="<?php echo isset($_POST['website-url']) ? $_POST['website-url'] : ''; ?>"></td>
                             </tr>
                         </table>
                     </fieldset>
@@ -95,7 +98,7 @@ require '../control/reg_control.php';
                             </tr>
                             <tr>
                                 <td><label for="confirm-password">Confirm Password:</label></td>
-                                <td><input type="password" id="confirm-password" name="confirm_password" placeholder="Confirm your password" required></td>
+                                <td><input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required></td>
                             </tr>
                         </table>
                     </fieldset>
@@ -110,7 +113,7 @@ require '../control/reg_control.php';
                             <td colspan="2">
                                 <div class="agreement">
                                     <input type="checkbox" id="terms" name="terms" required>
-                                    <label for="terms">I agree to the <a href="#">Terms and Conditions</a></label>
+                                    <label for="terms">I agree to the Terms and Conditions</label>
                                 </div>
                             </td>
                         </tr>
