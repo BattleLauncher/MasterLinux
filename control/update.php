@@ -1,70 +1,71 @@
 <?php
+// updateProcess.php
 require_once '../Database/Database.php';
 
-// Handle the update operation
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update'])) {
-    $id = (int)$_POST['id'];
-    $first_name = htmlspecialchars($_POST['first_name']);
-    $last_name = htmlspecialchars($_POST['last_name']);
-    $gender = htmlspecialchars($_POST['gender']);
-    $age = (int)$_POST['age'];
-    $email = htmlspecialchars($_POST['email']);
-    $phone = htmlspecialchars($_POST['phone']);
-    $location = htmlspecialchars($_POST['location']);
-    $business_name = htmlspecialchars($_POST['business_name']);
-    $business_type = htmlspecialchars($_POST['business_type']);
-    $website_url = htmlspecialchars($_POST['website_url']);
-    $password = $_POST['password'];
-
-    // Start SQL query with or without password update
-    if (!empty($password)) {
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT); // Hash password securely
-        $sql = "UPDATE customer 
-                SET first_name=?, last_name=?, gender=?, age=?, email=?, phone=?, location=?, business_name=?, business_type=?, website_url=?, password=? 
-                WHERE id=?";
-    } else {
-        $sql = "UPDATE customer 
-                SET first_name=?, last_name=?, gender=?, age=?, email=?, phone=?, location=?, business_name=?, business_type=?, website_url=? 
-                WHERE id=?";
-    }
-
-    if ($stmt = $conn->prepare($sql)) {
-        if (!empty($password)) {
-            $stmt->bind_param("sssiissssssi", $first_name, $last_name, $gender, $age, $email, $phone, $location, $business_name, $business_type, $website_url, $hashed_password, $id);
-        } else {
-            $stmt->bind_param("sssiisssssi", $first_name, $last_name, $gender, $age, $email, $phone, $location, $business_name, $business_type, $website_url, $id);
-        }
-
-        if ($stmt->execute()) {
-            echo "<p>Record updated successfully.</p>";
-        } else {
-            echo "<p>Error updating record: " . $stmt->error . "</p>";
-        }
-
-        $stmt->close();
-    } else {
-        echo "<p>Error: " . $conn->error . "</p>";
-    }
+// Start session to access session variables
+session_start();
+// Check if $userData is set and is an array, otherwise set default values
+if (!isset($userData) || !is_array($userData)) {
+    $userData = [
+        'first_name' => '',
+        'last_name' => '',
+        'email' => '',
+        'phone' => '',
+        'location' => '',
+        'business_name' => '',
+        'business_type' => '',
+        'password' => ''
+    ];}
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page if user is not logged in
+    header("Location: login.php");
+    exit();
 }
 
-// Fetch data for the form if user is found
-if (isset($_GET['id'])) {
-    $id = (int)$_GET['id'];
-    $sql = "SELECT * FROM customer WHERE id=?";
+// Initialize the Database class
+$database = new Database();
+$conn = $database->getConnection();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get POST data
+    $userId = $_SESSION['user_id']; // User ID from session
+    $firstName = $_POST['first_name'];
+    $lastName = $_POST['last_name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $location = $_POST['location'];
+    $businessName = $_POST['business_name'];
+    $businessType = $_POST['business_type'];
+    $password = $_POST['password']; // Don't forget to hash the password before saving it
+
+    // Update user data in the database
+    $query = "UPDATE customer 
+              SET first_name = :first_name, last_name = :last_name, email = :email, 
+                  phone = :phone, location = :location, business_name = :business_name, 
+                  business_type = :business_type, password = :password 
+              WHERE id = :user_id";
     
-    if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            $user = $result->fetch_assoc();
-        } else {
-            echo "<p>User not found.</p>";
-            exit;
-        }
-
-        $stmt->close();
+    $stmt = $conn->prepare($query);
+    
+    // Bind parameters
+    $stmt->bindParam(':first_name', $firstName);
+    $stmt->bindParam(':last_name', $lastName);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':phone', $phone);
+    $stmt->bindParam(':location', $location);
+    $stmt->bindParam(':business_name', $businessName);
+    $stmt->bindParam(':business_type', $businessType);
+    $stmt->bindParam(':password', $password);
+    $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+    
+    // Execute the statement and check for success
+    if ($stmt->execute()) {
+        // Redirect back to the dashboard with success message
+        header("Location: Dashboard.php?message=Profile updated successfully");
+        exit();
+    } else {
+        echo "Error updating profile. Please try again.";
     }
 }
 ?>

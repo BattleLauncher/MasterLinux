@@ -1,6 +1,6 @@
-<?php 
-// Include the Dashboard controller to fetch user data
-require_once '../control/Dashboard.php'; 
+<?php
+// View/deleteAccount.php
+require_once '../control/Dashboard.php';
 ?>
 
 <!DOCTYPE html>
@@ -8,45 +8,58 @@ require_once '../control/Dashboard.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/style.css">
-
-    <title>View Users</title>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
-    <h1>Registered Users</h1>
+    <section class="dashboard">
+        <div class="container">
+            <h1>Welcome, <?php echo htmlspecialchars($first_name); ?>!</h1>
+            <p>Your business: <strong><?php echo htmlspecialchars($business_name); ?></strong></p>
+            <p>Your business type: <strong><?php echo htmlspecialchars($business_type); ?></strong></p>
 
-    <?php if ($result->num_rows > 0): ?>
-        <table border="1">
-            <thead>
+            <h2>Profile Information</h2>
+            <table>
                 <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Location</th>
-                    <th>Business Name</th>
-                    <th>Business Type</th>
+                    <th>Full Name</th>
+                    <td><?php echo htmlspecialchars($first_name) . ' ' . htmlspecialchars($last_name); ?></td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php while($row = $result->fetch_assoc()): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($row['id']); ?></td>
-                        <td><?php echo htmlspecialchars($row['first_name']); ?></td>
-                        <td><?php echo htmlspecialchars($row['last_name']); ?></td>
-                        <td><?php echo htmlspecialchars($row['email']); ?></td>
-                        <td><?php echo htmlspecialchars($row['phone']); ?></td>
-                        <td><?php echo htmlspecialchars($row['location']); ?></td>
-                        <td><?php echo htmlspecialchars($row['business_name']); ?></td>
-                        <td><?php echo htmlspecialchars($row['business_type']); ?></td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-    <?php else: ?>
-        <p>No users found.</p>
-    <?php endif; ?>
+                <tr>
+                    <th>Email</th>
+                    <td><?php echo htmlspecialchars($email); ?></td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td><?php echo htmlspecialchars($phone); ?></td>
+                </tr>
+                <tr>
+                    <th>Location</th>
+                    <td><?php echo htmlspecialchars($location); ?></td>
+                </tr>
+            </table>
 
+            <h2>Business Details</h2>
+            <table>
+                <tr>
+                    <th>Business Name</th>
+                    <td><?php echo htmlspecialchars($business_name); ?></td>
+                </tr>
+                <tr>
+                    <th>Business Type</th>
+                    <td><?php echo htmlspecialchars($business_type); ?></td>
+                </tr>
+            </table>
+
+            <div>
+                <p><a href="update.php" class="btn">Edit Profile</a></p>
+                <p><a href="delete.php" class="btn">Delete Account</a></p>
+
+            </div>
+
+            <div class="logout-section">
+                <p><a href="login.php" class="btn-logout">Logout</a></p>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

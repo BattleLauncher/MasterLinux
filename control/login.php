@@ -1,61 +1,38 @@
 <?php
+// Start the session to manage user session
+session_start();
 
+// Include the database and Login class
 require_once '../Database/Database.php';
-// Initialize variables for error messages
-$emailErr = $passwordErr = $captchaErr = "";
 
-// Initialize variables to store form data (in case of errors, we'll retain the input)
-$email = $password = $captcha = "";
+// Initialize database connection
+$db = (new Database())->getConnection();
 
-// Define a correct captcha for validation (you can update this as per your requirement)
-$correctCaptcha = "12345";
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Sanitize and get user input from the login form
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Validate the input
+    if (!empty($email) && !empty($password)) {
+        // Create an instance of the Login class
+        $login = new Login($db);
 
-    // Validate email address
-    if (empty($_POST["email"])) {
-        $emailErr = "Email is required.";
-    } else {
-        // Sanitize and validate email
-        $email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $emailErr = "Invalid email format.";
-        }
-    }
+        // Attempt to validate credentials
+        if ($login->validateCredentials($email, $password)) {
+            // Store user data in session variables (assumes validateCredentials sets session)
+            $_SESSION['user_id'] = $login->getUserId();
+            $_SESSION['first_name'] = $login->getFirstName();
 
-    // Validate password
-    if (empty($_POST["password"])) {
-        $passwordErr = "Password is required.";
-    } else {
-        $password = $_POST["password"];
-    }
-
-    // Validate captcha
-    if (empty($_POST["captcha"])) {
-        $captchaErr = "Captcha is required.";
-    } else {
-        $captcha = $_POST["captcha"];
-        if ($captcha != $correctCaptcha) {
-            $captchaErr = "Incorrect captcha.";
-        }
-    }
-
-    // If no errors, proceed with further actions (e.g., database check)
-    if (empty($emailErr) && empty($passwordErr) && empty($captchaErr)) {
-        // Here, you would usually query the database to check if the email and password are correct
-        // For simplicity, we assume login is successful if the email and password are correct.
-
-        // Example validation (replace with actual database check)
-        $storedPassword = "password123"; // Example password, this should come from your database
-
-        if ($password == $storedPassword) {
-            // Redirect to the dashboard or another page upon successful login
+            // Redirect to the dashboard after successful login
             header("Location: dashboard.php");
             exit();
         } else {
-            $passwordErr = "Incorrect email or password.";
+            $error_message = "Invalid login credentials. Please try again.";
         }
+    } else {
+        $error_message = "Please fill in all required fields.";
     }
 }
 ?>

@@ -1,28 +1,31 @@
 <?php
-session_start();
 require_once '../Database/Database.php';
+session_start(); // Start the session to access session variables
 
-if (!isset($_SESSION['user_email'])) {
-    header('Location: login.php');
-    exit;
-}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
+    $email = $_POST['email'];
 
-$data_folder = '../data/';
-$json_file = $data_folder . 'userdata.json';
+    // Check if the user is logged in and if the email matches their own
+    if (isset($_SESSION['user_email']) && $_SESSION['user_email'] === $email) {
+        // Initialize database connection
+        $database = new Database();
+        $db = $database->getConnection();
 
-$users = json_decode(file_get_contents($json_file), true);
-$email = $_POST['email'] ?? '';
+        // Initialize Customer object
+        $customer = new Customer($db);
 
-foreach ($users as $index => $u) {
-    if ($u['email'] === $email) {
-        unset($users[$index]);
-        file_put_contents($json_file, json_encode(array_values($users), JSON_PRETTY_PRINT));
-        session_destroy();
-        echo "Account deleted successfully!";
-        header('refresh:2;url=login.php');
-        exit;
+        // Attempt to delete the account
+        if ($customer->deleteCustomer($email)) {
+            echo "Account successfully deleted.";
+            // Optionally, log the user out after deleting their account
+            session_destroy();
+        } else {
+            echo "Error: Account could not be deleted. Please try again.";
+        }
+    } else {
+        echo "Error: You can only delete your own account.";
     }
+} else {
+    echo "Invalid request.";
 }
-
-echo "Failed to delete the account.";
 ?>

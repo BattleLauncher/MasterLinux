@@ -1,0 +1,139 @@
+/* Global styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.5;
+    overflow-y: auto; /* Ensure scrollability */
+}
+
+.registration-form {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to the top */
+    min-height: 80vh; /* Ensure it spans the viewport height */
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in height calculations */
+}
+
+.container {
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Center horizontally */
+}
+
+/* Panel heading styling */
+.panel-heading {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.form-group input, 
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.form-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+    border-color: #4CAF50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* subtle focus effect */
+}
+
+/* Center the register button */
+.btn-register {
+    width: 50%; /* Adjust width for a balanced button size */
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    margin: 20px auto 0; /* Center the button horizontally and add spacing */
+    display: block; /* Ensures the button takes up its defined width */
+}
+
+.btn-register:hover {
+    background-color: #45a049;
+}
+
+/* Login link and footer links */
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #007bff;
+    margin: 0 15px;
+    font-size: 13px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* Error and success messages */
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.success-message {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Checkbox and label alignment */
+.form-group.checkbox-group {
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+}
+
+.form-group.checkbox-group input {
+    margin-right: 10px;
+}
+
+
