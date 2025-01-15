@@ -9,12 +9,12 @@ require_once '../control/Dashboard.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../CSS/dashboard.css">
 </head>
 <body>
     <section class="dashboard">
         <div class="container">
-            <h1>Welcome, <?php echo htmlspecialchars($first_name); ?>!</h1>
+            <h1>Welcome, <?php echo htmlspecialchars($first_name).' ' . htmlspecialchars($last_name); ?>!</h1>
             <p>Your business: <strong><?php echo htmlspecialchars($business_name); ?></strong></p>
             <p>Your business type: <strong><?php echo htmlspecialchars($business_type); ?></strong></p>
 
@@ -51,9 +51,7 @@ require_once '../control/Dashboard.php';
             </table>
 
             <div>
-                <p><a href="promote.php" class="btn">Promote</a></p>
-                <p><a href="update.php" class="btn">Edit Profile</a></p>
-                <p><a href="delete.php" class="btn">Delete Account</a></p>
+             <center>   <p><a href="promote.php" class="btn">Promote</a>  <a href="delete.php" class="btn">  Delete Account</a>  <a href="update.php" class="btn">  Edit Profile</a></p><center>
             </div>
 
             <div class="logout-section">

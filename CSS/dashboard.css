@@ -1,7 +1,7 @@
 /* General body styling */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f51717;
+    background-color: #f8f6f6;
     color: #333;
     margin: 0;
     padding: 0;
@@ -9,12 +9,12 @@ body {
 
 /* Dashboard container styling */
 .container {
-    max-width: 1000px;  /* Reduced width */
-    margin: 0 auto;
+    width: 96%; /* Ensures the container spans the full width of the screen */
+    margin: 0; /* Removes any horizontal centering */
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    border-radius: 0; /* Removes the rounded corners for a full-width layout */
 }
 
 /* Heading styling */
