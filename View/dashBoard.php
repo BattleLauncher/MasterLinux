@@ -51,9 +51,9 @@ require_once '../control/Dashboard.php';
             </table>
 
             <div>
+                <p><a href="promote.php" class="btn">Promote</a></p>
                 <p><a href="update.php" class="btn">Edit Profile</a></p>
                 <p><a href="delete.php" class="btn">Delete Account</a></p>
-
             </div>
 
             <div class="logout-section">

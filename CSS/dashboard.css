@@ -1,7 +1,7 @@
 /* General body styling */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
+    background-color: #f51717;
     color: #333;
     margin: 0;
     padding: 0;
@@ -9,7 +9,7 @@ body {
 
 /* Dashboard container styling */
 .container {
-    max-width: 900px;
+    max-width: 1000px;  /* Reduced width */
     margin: 0 auto;
     background-color: #fff;
     padding: 20px;
@@ -19,12 +19,12 @@ body {
 
 /* Heading styling */
 h1 {
-    color: #007bff;
+    color: #ef0909;
     font-size: 24px;
 }
 
 h2 {
-    color: #007bff;
+    color: #ef0909;
     font-size: 20px;
     margin-top: 20px;
     margin-bottom: 10px;
@@ -55,7 +55,7 @@ td {
 
 /* Button styling */
 .btn {
-    background-color: #007bff;
+    background-color: #ef0909;
     color: #fff;
     padding: 10px 20px;
     text-decoration: none;
@@ -66,12 +66,12 @@ td {
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #ef0909;
 }
 
 /* Delete button styling */
 .btn-delete {
-    background-color: #dc3545;
+    background-color: #ec0606;
     color: #fff;
     padding: 10px 20px;
     text-decoration: none;
@@ -80,9 +80,22 @@ td {
     margin: 5px 0;
     transition: background-color 0.3s ease;
 }
+/* CSS for styling the message text */
+.message {
+    color: white;
+    font-size: 16px;
+    padding: 5px 10px; /* Reduce vertical padding to decrease the background size */
+    background-color: #ec0606; /* Background color */
+    border-radius: 5px; /* Rounded corners */
+    margin-top: 10px;
+    text-align: center;
+    display: inline-block; /* Ensures the background shrinks to the size of the text */
+}
+
+
 
 .btn-delete:hover {
-    background-color: #b02a37;
+    background-color: #ec0606;
 }
 
 /* Form section styling */

@@ -1,7 +1,7 @@
 /* General body styling */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
+    background-color: #f51717;
     color: #333;
     margin: 0;
     padding: 0;
@@ -20,7 +20,7 @@ body {
 
 /* Heading styling */
 h1 {
-    color: #007bff;
+    color: #f51717;
     font-size: 24px;
     margin-bottom: 20px;
 }
@@ -62,13 +62,13 @@ input[type="email"] {
 input[type="text"]:focus,
 input[type="email"]:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #f51717;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
 }
 
 /* Button styling */
 .btn {
-    background-color: #007bff;
+    background-color: #f51717;
     color: #fff;
     padding: 10px 15px; /* Standard padding */
     font-size: 1em; /* Standard font size */
@@ -81,7 +81,7 @@ input[type="email"]:focus {
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #f51717;
 }
 
 /* Responsive Design for smaller screens */

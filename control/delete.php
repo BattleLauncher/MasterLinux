@@ -16,16 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
 
         // Attempt to delete the account
         if ($customer->deleteCustomer($email)) {
-            echo "Account successfully deleted.";
+            echo "<p class='message'>Account successfully deleted.</p>";
             // Optionally, log the user out after deleting their account
             session_destroy();
         } else {
-            echo "Error: Account could not be deleted. Please try again.";
+            echo "<p class='message'>Error: Account could not be deleted. Please try again.</p>";
         }
     } else {
-        echo "Error: You can only delete your own account.";
+        echo "<p class='message'>Error: You can only delete your own account.</p>";
     }
 } else {
-    echo "Invalid request.";
+    echo "<p class='message'>Invalid request.</p>";
 }
 ?>
