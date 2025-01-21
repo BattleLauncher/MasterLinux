@@ -28,12 +28,13 @@ class Customer {
 
     public function insertCustomer($data) {
         $query = "INSERT INTO " . $this->table_name . " 
-                  (first_name, last_name, gender, age, email, phone, location, business_name, business_type, password) 
-                  VALUES (:first_name, :last_name, :gender, :age, :email, :phone, :location, :business_name, :business_type, :password)";
+                  (id,first_name, last_name, gender, age, email, phone, location, business_name, business_type, password) 
+                  VALUES (:id,:first_name, :last_name, :gender, :age, :email, :phone, :location, :business_name, :business_type, :password)";
     
         $stmt = $this->conn->prepare($query);
 
         // Bind data
+        $stmt->bindParam("id", $data['id']);
         $stmt->bindParam(":first_name", $data['first_name']);
         $stmt->bindParam(":last_name", $data['last_name']);
         $stmt->bindParam(":gender", $data['gender']);
@@ -54,17 +55,24 @@ class Customer {
 
     // Method to delete a customer by ID
     public function deleteCustomer($id) {
-        $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+        // Prepare DELETE query
+        $query = "DELETE FROM " . $this->table_name. " WHERE id = ?";
+        
+        // Prepare the statement
+        if ($stmt = $this->conn->prepare($query)) {
+            // Bind the ID parameter
+            $stmt->bind_param("i", $id);
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            return false;
+            // Execute the query
+            if ($stmt->execute()) {
+                // Return true if successful
+                return true;
+            }
         }
+        // Return false if the query execution fails
+        return false;
     }
+    
 }
 
 class Login {

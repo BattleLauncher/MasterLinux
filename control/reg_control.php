@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate phone number (10-15 digits)
     $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
-    if (!preg_match('/^\d{10,15}$/', $phone)) {
+    if (!preg_match('/^\d{11}$/', $phone)) {
         $errors[] = "Phone number must be between 10 to 15 digits.";
     }
 
@@ -75,12 +75,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = "You must agree to the Terms and Conditions.";
     }
 
+    // Initialize database and customer objects
+    $database = new Database();
+    $db = $database->getConnection();
+
+    $customer = new Customer($db);
+
     // If no errors, process the form (e.g., save to database)
     if (empty($errors)) {
-        // Database logic here (e.g., insert into database)
-        echo "<p class='success-message'>Registration successful!</p>";
-        // Redirect to a success page (optional)
-        // header("Location: success.php");
+        // Prepare data for database
+        $data = [
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'gender' => $gender,
+            'age' => $age,
+            'email' => $email,
+            'phone' => $phone,
+            'location' => $location,
+            'business_name' => $businessName,
+            'business_type' => $businessType,
+            'password' => password_hash($password, PASSWORD_BCRYPT) // Hash password before saving
+        ];
+
+        if ($customer->insertCustomer($data)) {
+            echo "<p class='success-message'>Customer registered successfully!</p>";
+        } else {
+            echo "<p class='error-message'>Unable to register customer. Please try again.</p>";
+        }
     } else {
         // Display errors
         foreach ($errors as $error) {
@@ -88,32 +109,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-
-// Initialize database and customer objects
-$database = new Database();
-$db = $database->getConnection();
-
-$customer = new Customer($db);
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $data = [
-        'first_name' => filter_input(INPUT_POST, 'first-name', FILTER_SANITIZE_STRING),
-        'last_name' => filter_input(INPUT_POST, 'last-name', FILTER_SANITIZE_STRING),
-        'gender' => filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_STRING),
-        'age' => filter_input(INPUT_POST, 'age', FILTER_VALIDATE_INT),
-        'email' => filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL),
-        'phone' => filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING),
-        'location' => filter_input(INPUT_POST, 'location', FILTER_SANITIZE_STRING),
-        'business_name' => filter_input(INPUT_POST, 'business-name', FILTER_SANITIZE_STRING),
-        'business_type' => filter_input(INPUT_POST, 'business-type', FILTER_SANITIZE_STRING),
-        'password' => $_POST['password'] // Plain password, hashed inside the class
-    ];
-
-    if ($customer->insertCustomer($data)) {
-        echo "<p class='success-message'>Customer registered successfully!</p>";
-    } else {
-        echo "<p class='error-message'>Unable to register customer. Please try again.</p>";
-    }
-}
-
 ?>

@@ -24,6 +24,7 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // Check if user data is retrieved successfully
 if ($user) {
+    $id=$user['id'];
     $first_name = $user['first_name'];
     $last_name = $user['last_name'];
     $email = $user['email'];

@@ -21,6 +21,10 @@ require_once '../control/Dashboard.php';
             <h2>Profile Information</h2>
             <table>
                 <tr>
+                    <th>User ID</th>
+                    <td><?php echo htmlspecialchars($id)?></td>
+                </tr>
+                <tr>
                     <th>Full Name</th>
                     <td><?php echo htmlspecialchars($first_name) . ' ' . htmlspecialchars($last_name); ?></td>
                 </tr>
@@ -51,7 +55,7 @@ require_once '../control/Dashboard.php';
             </table>
 
             <div>
-             <center>   <p><a href="promote.php" class="btn">Promote</a>  <a href="delete.php" class="btn">  Delete Account</a>  <a href="update.php" class="btn">  Edit Profile</a></p><center>
+             <center><p><a href="promote.php" class="btn">Promote</a>  <a href="delete.php?email=<?php echo $email; ?>" class="btn">  Delete Account</a>  <a href="update.php" class="btn">  Edit Profile</a></p><center>
             </div>
 
             <div class="logout-section">

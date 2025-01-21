@@ -98,3 +98,54 @@ button:hover {
         font-size: 1em;
     }
 }
+/* Styling for the label */
+label[for="image"] {
+    font-size: 1.1em;
+    color: #333;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+/* Styling for the file input */
+input[type="file"] {
+    display: block;
+    padding: 8px;
+    font-size: 1em;
+    color: #555;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Change border and background on hover */
+input[type="file"]:hover {
+    border-color: #007bff;
+    background-color: #e6f7ff;
+}
+
+/* Focus state for file input */
+input[type="file"]:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+/* Styling for the file name display */
+.file-name {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #007bff;
+    font-style: italic;
+    text-align: left;
+}
+
+/* Optional: Add some spacing for better layout */
+.file-upload-container {
+    margin-bottom: 20px;
+}
