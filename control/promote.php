@@ -1,35 +1,65 @@
 <?php
-// Include the database connection file
+session_start();
+
+// Include the database connection and Promote class
 require_once '../Database/Database.php';
+// Initialize database connection
+$database = new Database();
+$db = $database->getConnection();
 
+$promote = new Promote($db);
+
+// Array to hold error messages
+$errors = [];
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    echo "<p class='error-message'>You must be logged in to submit a promotion request.</p>";
+    exit;
+}
+
+// Get the user ID from the session
+$userId = $_SESSION['user_id'];
+
+// Check if form is submitted via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $database = new Database();
-    $db = $database->getConnection();
-
-    // Sanitize user input
-    $userId = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT);
+    // Sanitize and validate input
     $businessName = filter_input(INPUT_POST, 'business_name', FILTER_SANITIZE_STRING);
     $promotionDetails = filter_input(INPUT_POST, 'promotion_details', FILTER_SANITIZE_STRING);
     $requestedBudget = filter_input(INPUT_POST, 'requested_budget', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
-    if ($userId && $businessName && $promotionDetails && $requestedBudget) {
-        $query = "INSERT INTO promotion_requests (user_id, business_name, promotion_details, requested_budget, status) 
-                  VALUES (:user_id, :business_name, :promotion_details, :requested_budget, 'Pending')";
+    // Validate required fields
+    if (empty($businessName)) {
+        $errors[] = "Business name is required.";
+    }
+    if (empty($promotionDetails)) {
+        $errors[] = "Promotion details are required.";
+    }
+    if (empty($requestedBudget) || $requestedBudget <= 0) {
+        $errors[] = "Requested budget must be a positive number.";
+    }
 
-        $stmt = $db->prepare($query);
+    // If no errors, process the form (e.g., save to database)
+    if (empty($errors)) {
+        // Prepare data for database
+        $data = [
+            'id' => $userId,
+            'business_name' => $businessName,
+            'promotion_details' => $promotionDetails,
+            'requested_budget' => $requestedBudget
+        ];
 
-        $stmt->bindParam(':user_id', $userId);
-        $stmt->bindParam(':business_name', $businessName);
-        $stmt->bindParam(':promotion_details', $promotionDetails);
-        $stmt->bindParam(':requested_budget', $requestedBudget);
-
-        if ($stmt->execute()) {
-            echo "Promotion request submitted successfully.";
+        // Attempt to save promotion request
+        if ($promote->submitPromotionRequest($data)) {
+            echo "<p class='success-message'>Promotion request submitted successfully!</p>";
         } else {
-            echo "Error submitting promotion request.";
+            echo "<p class='error-message'>Unable to submit promotion request. Please try again.</p>";
         }
     } else {
-        echo "Invalid input. Please fill all fields.";
+        // Display errors
+        foreach ($errors as $error) {
+            echo "<p class='error-message'>$error</p>";
+        }
     }
 }
 ?>

@@ -16,7 +16,7 @@ require_once '../control/reg_control.php';
             <h1>Create Your Startup Account</h1>
             <p>Join our platform to promote and increase your sales.</p>
             
-            <form action="registration.php" method="post" enctype="multipart/form-data">
+            <form action="registration.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm();">
 
                 <!-- Personal Information Section -->
                 <fieldset>
@@ -107,5 +107,8 @@ require_once '../control/reg_control.php';
             </div>
         </div>
     </section>
+
+    <!-- Link to External JavaScript -->
+    <script src="../JSS/jss.js"></script>
 </body>
 </html>

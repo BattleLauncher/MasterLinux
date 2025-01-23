@@ -143,4 +143,45 @@ function updateUser($userId, $firstName, $lastName, $email, $phone, $location, $
 
     return $stmt->execute();
 }
+
+class Promote {
+    private $conn;
+    private $table_name = "promotion_requests";
+
+    public function __construct($db) {
+        $this->conn = $db;
+    }
+
+    // Submit a new promotion request
+    public function submitPromotionRequest($data) {
+        // Check if all required fields are present
+        if (!isset($data['user_id'], $data['business_name'], $data['promotion_details'], $data['requested_budget'])) {
+            return false;
+        }
+
+        $query = "INSERT INTO " . $this->table_name . " 
+                  (id, business_name, promotion_details, requested_budget, status) 
+                  VALUES (:id, :business_name, :promotion_details, :requested_budget, 'Pending')";
+
+        $stmt = $this->conn->prepare($query);
+
+        try {
+            // Bind parameters
+            $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
+            $stmt->bindParam(':business_name', $data['business_name'], PDO::PARAM_STR);
+            $stmt->bindParam(':promotion_details', $data['promotion_details'], PDO::PARAM_STR);
+            $stmt->bindParam(':requested_budget', $data['requested_budget'], PDO::PARAM_STR);
+
+            // Execute the statement
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
+        } catch (PDOException $e) {
+            // Log or handle the error as needed
+            error_log("Database error: " . $e->getMessage());
+            return false;
+        }
+    }
+}
 ?>

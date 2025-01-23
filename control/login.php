@@ -2,6 +2,8 @@
 // Start the session to manage user session
 session_start();
 
+// Example: Set user_id after successful login
+
 // Include the database and Login class
 require_once '../Database/Database.php';
 
