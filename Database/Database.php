@@ -52,17 +52,33 @@ class Customer {
     }
     
 
-    // Method to delete a customer by ID
-    public function deleteCustomer($id) {
-        $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
+    public function deleteCustomer($email) {
+        $query = "DELETE FROM " . $this->table_name . " WHERE email = ?";
+        
+        // Prepare the SQL query
         if ($stmt = $this->conn->prepare($query)) {
-            $stmt->bindValue(1, $id, PDO::PARAM_INT); // Corrected bind_param to bindValue
+            // Bind the email parameter to prevent SQL injection
+            $stmt->bindValue(1, $email, PDO::PARAM_STR);
+        
+            // Execute the query and check if it was successful
             if ($stmt->execute()) {
-                return true;
+                return true; // Successfully deleted
+            } else {
+                // Capture any errors if the deletion fails
+                $errorInfo = $stmt->errorInfo();
+                // Log error for debugging purposes
+                error_log("Delete failed: " . print_r($errorInfo, true));
             }
+        } else {
+            // Log query preparation failure
+            error_log("Query preparation failed: " . print_r($this->conn->errorInfo(), true));
         }
-        return false;
-    }    
+        
+        return false; // Return false if deletion failed
+    }
+    
+    
+      
     
 }
 
@@ -125,14 +141,9 @@ function updateUser($userId, $firstName, $lastName, $email, $phone, $location, $
                   location = :location, 
                   business_name = :business_name, 
                   business_type = :business_type, 
-                  password = :password";
-
-    // Only update profile_picture if a new one is provided
-    if (!empty($profilePicture)) {
-        $query .= ", profile_picture = :profile_picture";
-    }
-
-    $query .= " WHERE id = :id";
+                  password = :password, 
+                  profile_picture = :profile_picture
+              WHERE id = :id";
 
     $stmt = $conn->prepare($query);
 
@@ -145,19 +156,12 @@ function updateUser($userId, $firstName, $lastName, $email, $phone, $location, $
     $stmt->bindParam(":business_name", $businessName);
     $stmt->bindParam(":business_type", $businessType);
     $stmt->bindParam(":password", $password);
+    $stmt->bindParam(":profile_picture", $profilePicture);
+    $stmt->bindParam(":id", $userId);  // Bind the userId to the WHERE clause
 
-    // Bind profile picture if it's not empty
-    if (!empty($profilePicture)) {
-        $stmt->bindParam(":profile_picture", $profilePicture);
-    }
-
-    $stmt->bindParam(":id", $userId, PDO::PARAM_INT);
-
-    // Execute and return success status
+    // Execute the query
     return $stmt->execute();
 }
-
-
 
 class Promote {
     private $conn;

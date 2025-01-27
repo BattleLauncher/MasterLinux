@@ -4,30 +4,34 @@ session_start();
 
 $error_message = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
-    // Sanitize input: assuming ID is an integer
-    $id = filter_var($_POST['email'] ?? '', FILTER_SANITIZE_NUMBER_INT);
+// Assuming you are checking the session and comparing the email before calling deleteCustomer
 
-    // Validate session and ID
-    if (isset($_SESSION['email']) && $_SESSION['id'] === $email) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
+    $email = $_SESSION['email']; // Email from session (already logged-in)
+
+    // Check if the logged-in user is attempting to delete their account
+    if ($email === $_SESSION['email']) {
         // Create a database object and get the connection
         $database = new Database();
         $db = $database->getConnection();
         
         // Instantiate the Customer object
         $customer = new Customer($db);
-
-        // Attempt to delete the customer by ID
+        
+        // Attempt to delete the customer by email
         if ($customer->deleteCustomer($email)) {
-            // Destroy session and log the user out
+            // If successful, destroy session and redirect to login page
             session_destroy();
-            header("Location: login.php"); // Redirect after successful deletion
+            header("Location: login.php");
             exit;
         } else {
+            // Show error message if deletion fails
             $error_message = "Error: Unable to delete account. Please try again.";
         }
     } else {
-        $error_message = "Error: You can only delete your own account.";
+        // Show message if trying to delete another user's account
+        $error_message = "You can only delete your own account.";
     }
 }
+
 ?>

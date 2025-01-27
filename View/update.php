@@ -18,11 +18,14 @@ require_once '../control/update.php';
             <h1>Edit Profile</h1>
             <form action="update.php" method="post" enctype="multipart/form-data">
                 <div class="profile-pic-section">
-                    <h3>Current Profile Picture</h3>
-                    <img src="<?php echo htmlspecialchars($userData['profile_picture'] ?? '../images/default-profile.png'); ?>" 
+                <center> 
+                   <img src="<?php echo htmlspecialchars($userData['profile_picture'] ?? '../images/default-profile.png'); ?>" 
                          alt="Profile Picture" 
                          style="width:150px; height:150px; border-radius:50%; border: 1px solid #ccc;">
+                         <h3>Current Profile Picture</h3>
+                </center>
                 </div>
+                
                 <div class="form-group">
                     <label for="profile_picture">Upload New Profile Picture</label>
                     <input type="file" id="profile_picture" name="profile_picture" accept="image/*">

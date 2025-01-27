@@ -172,18 +172,21 @@ button:hover {
 
 /* Profile Picture container */
 .profile-pic-container {
-    width: 50px; /* Set the width */
-    height: 50px; /* Set the height */
-    border-radius: 50%; /* Optional: makes the container circular */
+    width: 100px; /* Set the width to a larger size for better visibility */
+    height: 100px; /* Set the height to match the width */
+    border-radius: 50%; /* Makes the container circular */
     overflow: hidden; /* Ensures the image fits within the container */
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 2px solid #ddd; /* Optional: adds a border for better separation */
+    background-color: #f0f0f0; /* Optional: background color for a nice effect */
 }
 
 /* Profile Picture styling */
 .profile-pic {
-    width: 50px; /* Set the width of the image */
-    height: 50px; /* Set the height of the image */
+    width: 100%; /* Ensures the image fills the container */
+    height: 100%; /* Ensures the image fills the container */
     object-fit: cover; /* Ensures the image covers the area while maintaining its aspect ratio */
 }
+
