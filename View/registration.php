@@ -53,6 +53,10 @@ require_once '../control/reg_control.php';
                         <label for="location">Location:</label>
                         <input type="text" id="location" name="location" required>
                     </div>
+                    <div class="form-group">
+                        <label for="profile-picture">Profile Picture:</label>
+                        <input type="file" id="profile-picture" name="profile-picture" accept="image/*" required>
+                    </div>
                 </fieldset>
 
                 <!-- Business Information Section -->
@@ -85,13 +89,13 @@ require_once '../control/reg_control.php';
                         <input type="password" id="confirm-password" name="confirm-password" required>
                     </div>
                 </fieldset>
+                
                 <div class="form-group">
-                <b>
-                    <input type="checkbox" id="terms" name="terms" required>
-                    I agree to the Terms and Conditions
-                </b>
-            </div>
-
+                    <b>
+                        <input type="checkbox" id="terms" name="terms" required>
+                        I agree to the Terms and Conditions
+                    </b>
+                </div>
 
                 <div class="form-group">
                     <button type="submit" class="btn-register">Submit</button>

@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate phone number (10-15 digits)
     $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
     if (!preg_match('/^\d{11}$/', $phone)) {
-        $errors[] = "Phone number must be between 10 to 15 digits.";
+        $errors[] = "Phone number must be between 11 digits.";
     }
 
     // Sanitize location
@@ -75,6 +75,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = "You must agree to the Terms and Conditions.";
     }
 
+// Handle profile picture upload
+if (isset($_FILES['profile-picture']) && $_FILES['profile-picture']['error'] == 0) {
+    $uploadDir = '../uploads/'; // Directory to store uploaded files
+
+    // Ensure the directory exists
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    $uploadFile = $uploadDir . basename($_FILES['profile-picture']['name']);
+
+    // Validate file type (e.g., only allow images)
+    $fileType = strtolower(pathinfo($uploadFile, PATHINFO_EXTENSION));
+    $allowedTypes = ['jpg', 'jpeg'];
+
+    if (!in_array($fileType, $allowedTypes)) {
+        $errors[] = "Only JPG and JPEG files are allowed for the profile picture.";
+    } else {
+        // Move uploaded file to the target directory
+        if (move_uploaded_file($_FILES['profile-picture']['tmp_name'], $uploadFile)) {
+            $profile_picture = $uploadFile; // Store file path in $profile_picture
+        } else {
+            $errors[] = "Failed to upload profile picture. Please check file permissions.";
+        }
+    }
+} else {
+    $profile_picture = null; // Set to null if no file uploaded
+}
+
+
     // Initialize database and customer objects
     $database = new Database();
     $db = $database->getConnection();
@@ -85,6 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($errors)) {
         // Prepare data for database
         $data = [
+            'id' => null, // Assuming id is auto-incremented
             'first_name' => $firstName,
             'last_name' => $lastName,
             'gender' => $gender,
@@ -94,7 +125,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'location' => $location,
             'business_name' => $businessName,
             'business_type' => $businessType,
-            'password' => password_hash($password, PASSWORD_BCRYPT) // Hash password before saving
+            'password' => $password,
+            'profile_picture' => $profile_picture
         ];
 
         if ($customer->insertCustomer($data)) {

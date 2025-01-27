@@ -27,14 +27,15 @@ class Customer {
     }
 
     public function insertCustomer($data) {
+    
         $query = "INSERT INTO " . $this->table_name . " 
-                  (id,first_name, last_name, gender, age, email, phone, location, business_name, business_type, password) 
-                  VALUES (:id,:first_name, :last_name, :gender, :age, :email, :phone, :location, :business_name, :business_type, :password)";
+                  (id, first_name, last_name, gender, age, email, phone, location, business_name, business_type, password, profile_picture) 
+                  VALUES (:id, :first_name, :last_name, :gender, :age, :email, :phone, :location, :business_name, :business_type, :password, :profile_picture)";
     
         $stmt = $this->conn->prepare($query);
-
+    
         // Bind data
-        $stmt->bindParam("id", $data['id']);
+        $stmt->bindParam(":id", $data['id']);
         $stmt->bindParam(":first_name", $data['first_name']);
         $stmt->bindParam(":last_name", $data['last_name']);
         $stmt->bindParam(":gender", $data['gender']);
@@ -44,34 +45,24 @@ class Customer {
         $stmt->bindParam(":location", $data['location']);
         $stmt->bindParam(":business_name", $data['business_name']);
         $stmt->bindParam(":business_type", $data['business_type']);
-        $stmt->bindParam(":password", $data['password']); // Storing plain text password
+        $stmt->bindParam(":password", $data['password']);
+        $stmt->bindParam(":profile_picture", $data['profile_picture']);
     
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $stmt->execute();
     }
+    
 
     // Method to delete a customer by ID
     public function deleteCustomer($id) {
-        // Prepare DELETE query
-        $query = "DELETE FROM " . $this->table_name. " WHERE id = ?";
-        
-        // Prepare the statement
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = ?";
         if ($stmt = $this->conn->prepare($query)) {
-            // Bind the ID parameter
-            $stmt->bind_param("i", $id);
-
-            // Execute the query
+            $stmt->bindValue(1, $id, PDO::PARAM_INT); // Corrected bind_param to bindValue
             if ($stmt->execute()) {
-                // Return true if successful
                 return true;
             }
         }
-        // Return false if the query execution fails
         return false;
-    }
+    }    
     
 }
 
@@ -124,13 +115,28 @@ function getUserData($userId, $conn) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function updateUser($userId, $firstName, $lastName, $email, $phone, $location, $businessName, $businessType, $password, $conn) {
-    $query = "UPDATE customer SET first_name = :first_name, last_name = :last_name, email = :email, phone = :phone, 
-              location = :location, business_name = :business_name, business_type = :business_type, password = :password 
-              WHERE id = :id";
+function updateUser($userId, $firstName, $lastName, $email, $phone, $location, $businessName, $businessType, $password, $profilePicture, $conn) {
+    // Update query including the profile picture
+    $query = "UPDATE customer 
+              SET first_name = :first_name, 
+                  last_name = :last_name, 
+                  email = :email, 
+                  phone = :phone, 
+                  location = :location, 
+                  business_name = :business_name, 
+                  business_type = :business_type, 
+                  password = :password";
+
+    // Only update profile_picture if a new one is provided
+    if (!empty($profilePicture)) {
+        $query .= ", profile_picture = :profile_picture";
+    }
+
+    $query .= " WHERE id = :id";
 
     $stmt = $conn->prepare($query);
 
+    // Bind parameters
     $stmt->bindParam(":first_name", $firstName);
     $stmt->bindParam(":last_name", $lastName);
     $stmt->bindParam(":email", $email);
@@ -139,49 +145,58 @@ function updateUser($userId, $firstName, $lastName, $email, $phone, $location, $
     $stmt->bindParam(":business_name", $businessName);
     $stmt->bindParam(":business_type", $businessType);
     $stmt->bindParam(":password", $password);
-    $stmt->bindParam(":id", $userId);
 
+    // Bind profile picture if it's not empty
+    if (!empty($profilePicture)) {
+        $stmt->bindParam(":profile_picture", $profilePicture);
+    }
+
+    $stmt->bindParam(":id", $userId, PDO::PARAM_INT);
+
+    // Execute and return success status
     return $stmt->execute();
 }
 
+
+
 class Promote {
     private $conn;
-    private $table_name = "promotion_requests";
+    private $table_name = "customer";
 
     public function __construct($db) {
         $this->conn = $db;
     }
 
-    // Submit a new promotion request
-    public function submitPromotionRequest($data) {
-        // Check if all required fields are present
-        if (!isset($data['user_id'], $data['business_name'], $data['promotion_details'], $data['requested_budget'])) {
+    public function submitPromotionRequest($data, $userId) {
+        // Check for required fields
+        if (!isset($data['promotion_details'], $data['requested_budget'], $userId)) {
             return false;
         }
-
-        $query = "INSERT INTO " . $this->table_name . " 
-                  (id, business_name, promotion_details, requested_budget, status) 
-                  VALUES (:id, :business_name, :promotion_details, :requested_budget, 'Pending')";
+    
+        // Prepare the query
+        $query = "UPDATE {$this->table_name} 
+        SET promotion_details = :promotion_details, 
+            requested_budget = :requested_budget 
+        WHERE id = :user_id";
 
         $stmt = $this->conn->prepare($query);
-
-        try {
-            // Bind parameters
-            $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
-            $stmt->bindParam(':business_name', $data['business_name'], PDO::PARAM_STR);
-            $stmt->bindParam(':promotion_details', $data['promotion_details'], PDO::PARAM_STR);
-            $stmt->bindParam(':requested_budget', $data['requested_budget'], PDO::PARAM_STR);
-
-            // Execute the statement
-            if ($stmt->execute()) {
-                return true;
-            }
-            return false;
-        } catch (PDOException $e) {
-            // Log or handle the error as needed
-            error_log("Database error: " . $e->getMessage());
+    
+        // Bind parameters
+        $stmt->bindParam(':promotion_details', $data['promotion_details']);
+        $stmt->bindParam(':requested_budget', $data['requested_budget']);
+        $stmt->bindParam(':user_id', $userId);
+    
+        // Execute the query and check if it was successful
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            // If query fails, output error details
+            echo "<p class='error-message'>Error: " . implode(", ", $stmt->errorInfo()) . "</p>";
             return false;
         }
     }
+    
+    
 }
+
 ?>

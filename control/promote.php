@@ -1,65 +1,44 @@
 <?php
 session_start();
-
-// Include the database connection and Promote class
 require_once '../Database/Database.php';
-// Initialize database connection
-$database = new Database();
-$db = $database->getConnection();
-
-$promote = new Promote($db);
-
-// Array to hold error messages
-$errors = [];
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    echo "<p class='error-message'>You must be logged in to submit a promotion request.</p>";
-    exit;
+    exit("<p class='error-message'>You must be logged in to submit a promotion request.</p>");
 }
 
-// Get the user ID from the session
-$userId = $_SESSION['user_id'];
-
-// Check if form is submitted via POST
+// Process the form if it is submitted via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sanitize and validate input
-    $businessName = filter_input(INPUT_POST, 'business_name', FILTER_SANITIZE_STRING);
     $promotionDetails = filter_input(INPUT_POST, 'promotion_details', FILTER_SANITIZE_STRING);
-    $requestedBudget = filter_input(INPUT_POST, 'requested_budget', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $requestedBudget = filter_input(INPUT_POST, 'requested_budget', FILTER_VALIDATE_FLOAT);
 
-    // Validate required fields
-    if (empty($businessName)) {
-        $errors[] = "Business name is required.";
-    }
-    if (empty($promotionDetails)) {
-        $errors[] = "Promotion details are required.";
-    }
-    if (empty($requestedBudget) || $requestedBudget <= 0) {
-        $errors[] = "Requested budget must be a positive number.";
-    }
+    // Validate inputs
+    if (!empty($promotionDetails) && $requestedBudget && $requestedBudget > 0) {
+        try {
+            // Initialize database connection and promote object
+            $database = new Database();
+            $db = $database->getConnection();
+            $promote = new Promote($db);
 
-    // If no errors, process the form (e.g., save to database)
-    if (empty($errors)) {
-        // Prepare data for database
-        $data = [
-            'id' => $userId,
-            'business_name' => $businessName,
-            'promotion_details' => $promotionDetails,
-            'requested_budget' => $requestedBudget
-        ];
+            // Add the logged-in user's ID to the data
+            $userId = $_SESSION['user_id']; // Correctly set user ID
+            $data = [
+                'promotion_details' => $promotionDetails,
+                'requested_budget' => $requestedBudget,
+            ];
 
-        // Attempt to save promotion request
-        if ($promote->submitPromotionRequest($data)) {
-            echo "<p class='success-message'>Promotion request submitted successfully!</p>";
-        } else {
-            echo "<p class='error-message'>Unable to submit promotion request. Please try again.</p>";
+            // Attempt to submit the promotion request
+            if ($promote->submitPromotionRequest($data, $userId)) { // Pass $userId
+                echo "<p class='success-message'>Promotion request submitted successfully!</p>";
+            } else {
+                echo "<p class='error-message'>Unable to submit promotion request. Please try again.</p>";
+            }
+        } catch (Exception $e) {
+            echo "<p class='error-message'>An error occurred: " . htmlspecialchars($e->getMessage()) . "</p>";
         }
     } else {
-        // Display errors
-        foreach ($errors as $error) {
-            echo "<p class='error-message'>$error</p>";
-        }
+        echo "<p class='error-message'>Please provide valid promotion details and a positive budget.</p>";
     }
 }
 ?>

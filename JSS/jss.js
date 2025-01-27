@@ -14,37 +14,7 @@ function validateForm() {
     const confirmPassword = document.getElementById("confirm-password").value;
     const terms = document.getElementById("terms").checked;
 
-    // Get error message elements
-    const emailError = document.getElementById("email-error");
-    const ageError = document.getElementById("age-error");
-    const phoneError = document.getElementById("phone-error");
-
-    // Reset error messages
-    emailError.innerHTML = "";
-    ageError.innerHTML = "";
-    phoneError.innerHTML = "";
-
-    // Email format validation
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!email.match(emailRegex)) {
-        emailError.innerHTML = "Please enter a valid email address.";
-        return false;
-    }
-
-    // Age validation
-    if (isNaN(age) || age <= 18) {
-        ageError.innerHTML = "Age must be a number greater than 18.";
-        return false;
-    }
-
-    // Phone number validation
-    const phoneRegex = /^[0-9]{10}$/;
-    if (!phone.match(phoneRegex)) {
-        phoneError.innerHTML = "Please enter a valid 10-digit phone number.";
-        return false;
-    }
-
-    // Other validations
+    // Validation messages
     if (!firstName || !lastName || !gender || !age || !email || !phone || !location || !businessName || !businessType || !password || !confirmPassword) {
         alert("All fields are required. Please fill out the entire form.");
         return false;

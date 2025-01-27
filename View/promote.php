@@ -1,6 +1,5 @@
 <?php
 require_once '../control/promote.php';
-
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +7,7 @@ require_once '../control/promote.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/promote.css">
+    <link rel="stylesheet" href="../CSS/promote.css">
 
     <title>Promotion Request</title>
 </head>
@@ -20,11 +19,6 @@ require_once '../control/promote.php';
     <?php endif; ?>
 
     <form action="promote.php" method="POST">
-        <label for="user_id">User ID:</label><br>
-        <input type="number" id="user_id" name="user_id" required><br><br>
-
-        <label for="business_name">Business Name:</label><br>
-        <input type="text" id="business_name" name="business_name" required><br><br>
 
         <label for="promotion_details">Promotion Details:</label><br>
         <textarea id="promotion_details" name="promotion_details" rows="5" cols="30" required></textarea><br><br>

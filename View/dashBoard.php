@@ -14,15 +14,25 @@ require_once '../control/Dashboard.php';
 <body>
     <section class="dashboard">
         <div class="container">
-            <h1>Welcome, <?php echo htmlspecialchars($first_name).' ' . htmlspecialchars($last_name); ?>!</h1>
+            <h1>Welcome, <?php echo htmlspecialchars($first_name) . ' ' . htmlspecialchars($last_name); ?>!</h1>
             <p>Your business: <strong><?php echo htmlspecialchars($business_name); ?></strong></p>
             <p>Your business type: <strong><?php echo htmlspecialchars($business_type); ?></strong></p>
 
             <h2>Profile Information</h2>
-            <table>
+            <!-- Display profile picture -->
+            <div class="profile-pic-container">
+                <img 
+                    src="<?php echo $profile_picture ? htmlspecialchars($profile_picture) : '../uploads/default-profile.png'; ?>" 
+                    alt="Profile Picture" 
+                    class="profile-pic"
+                >
+            </div>
+
+
+            <table class="profile-info">
                 <tr>
                     <th>User ID</th>
-                    <td><?php echo htmlspecialchars($id)?></td>
+                    <td><?php echo htmlspecialchars($id); ?></td>
                 </tr>
                 <tr>
                     <th>Full Name</th>
@@ -43,7 +53,7 @@ require_once '../control/Dashboard.php';
             </table>
 
             <h2>Business Details</h2>
-            <table>
+            <table class="business-info">
                 <tr>
                     <th>Business Name</th>
                     <td><?php echo htmlspecialchars($business_name); ?></td>
@@ -54,8 +64,14 @@ require_once '../control/Dashboard.php';
                 </tr>
             </table>
 
-            <div>
-             <center><p><a href="promote.php?email=<?php echo $email; ?>" class="btn">Promote</a>  <a href="delete.php?email=<?php echo $email; ?>" class="btn">  Delete Account</a>  <a href="update.php" class="btn">  Edit Profile</a></p><center>
+            <div class="action-buttons">
+                <p>
+                    <center>
+                    <a href="promote.php?email=<?php echo $email; ?>" class="btn">Promote</a>
+                    <a href="delete.php?email=<?php echo $email; ?>" class="btn">Delete Account</a>
+                    <a href="update.php" class="btn">Edit Profile</a>
+                    </center>
+                </p>
             </div>
 
             <div class="logout-section">

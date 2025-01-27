@@ -9,23 +9,25 @@ body {
 
 /* Dashboard container styling */
 .container {
-    width: 96%; /* Ensures the container spans the full width of the screen */
-    margin: 0; /* Removes any horizontal centering */
+    max-width: 1200px;
+    margin: 20px auto; /* Centers the container and adds vertical spacing */
     background-color: #fff;
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 0; /* Removes the rounded corners for a full-width layout */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px; /* Added rounded corners for a modern look */
 }
 
 /* Heading styling */
 h1 {
     color: #ef0909;
-    font-size: 24px;
+    font-size: 28px;
+    text-align: center; /* Centered the main heading */
+    margin-bottom: 20px;
 }
 
 h2 {
     color: #ef0909;
-    font-size: 20px;
+    font-size: 22px;
     margin-top: 20px;
     margin-bottom: 10px;
 }
@@ -35,10 +37,11 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    font-size: 16px; /* Adjusted font size for readability */
 }
 
 th, td {
-    padding: 10px;
+    padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
@@ -46,56 +49,62 @@ th, td {
 th {
     background-color: #f4f4f4;
     color: #555;
-    font-weight: normal;
+    font-weight: bold; /* Made headers stand out more */
 }
 
 td {
     color: #333;
 }
 
+/* Add alternating row colors for better readability */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
 /* Button styling */
 .btn {
     background-color: #ef0909;
     color: #fff;
-    padding: 10px 20px;
+    padding: 12px 25px;
     text-decoration: none;
     border-radius: 5px;
     display: inline-block;
-    margin: 5px 0;
-    transition: background-color 0.3s ease;
+    margin: 10px 5px;
+    transition: all 0.3s ease;
+    font-size: 16px;
 }
 
 .btn:hover {
-    background-color: #ef0909;
+    background-color: #d30707;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Delete button styling */
 .btn-delete {
     background-color: #ec0606;
     color: #fff;
-    padding: 10px 20px;
+    padding: 12px 25px;
     text-decoration: none;
     border-radius: 5px;
     display: inline-block;
-    margin: 5px 0;
-    transition: background-color 0.3s ease;
+    margin: 10px 5px;
+    transition: all 0.3s ease;
 }
-/* CSS for styling the message text */
+
+.btn-delete:hover {
+    background-color: #ba0404;
+}
+
+/* CSS for message text */
 .message {
     color: white;
     font-size: 16px;
-    padding: 5px 10px; /* Reduce vertical padding to decrease the background size */
-    background-color: #ec0606; /* Background color */
-    border-radius: 5px; /* Rounded corners */
-    margin-top: 10px;
-    text-align: center;
-    display: inline-block; /* Ensures the background shrinks to the size of the text */
-}
-
-
-
-.btn-delete:hover {
+    padding: 8px 12px;
     background-color: #ec0606;
+    border-radius: 5px;
+    margin-top: 15px;
+    text-align: center;
+    display: inline-block;
 }
 
 /* Form section styling */
@@ -122,8 +131,8 @@ label {
 
 input[type="text"],
 input[type="email"] {
-    padding: 10px;
-    font-size: 1em;
+    padding: 12px;
+    font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
@@ -152,7 +161,7 @@ button {
     color: #fff;
     border: none;
     border-radius: 5px;
-    font-size: 1em;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -161,18 +170,20 @@ button:hover {
     background-color: #0056b3;
 }
 
-/* Responsive Design for smaller screens */
-@media (max-width: 768px) {
-    .container {
-        padding: 20px;
-    }
+/* Profile Picture container */
+.profile-pic-container {
+    width: 50px; /* Set the width */
+    height: 50px; /* Set the height */
+    border-radius: 50%; /* Optional: makes the container circular */
+    overflow: hidden; /* Ensures the image fits within the container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    h1 {
-        font-size: 1.5em;
-    }
-
-    button {
-        padding: 10px 15px;
-        font-size: 0.9em;
-    }
+/* Profile Picture styling */
+.profile-pic {
+    width: 50px; /* Set the width of the image */
+    height: 50px; /* Set the height of the image */
+    object-fit: cover; /* Ensures the image covers the area while maintaining its aspect ratio */
 }
