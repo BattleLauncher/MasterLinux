@@ -1,7 +1,7 @@
 <?php
 class Database {
     private $host = "localhost";
-    private $db_name = "mydatabase";
+    private $db_name = "database";
     private $username = "root"; // Update with your DB username
     private $password = "";    // Update with your DB password
     public $conn;
