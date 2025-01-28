@@ -19,6 +19,10 @@ function validateForm() {
         alert("All fields are required. Please fill out the entire form.");
         return false;
     }
+    if (!validateEmail(email)) {
+        alert("Please enter a valid email address.");
+        return false;
+    }
 
     if (password !== confirmPassword) {
         alert("Passwords do not match. Please try again.");
@@ -30,5 +34,43 @@ function validateForm() {
         return false;
     }
 
-    return true; // Allow form submission if validation passes
+    // Perform AJAX validation
+    const formData = {
+        firstName,
+        lastName,
+        gender,
+        age,
+        email,
+        phone,
+        location,
+        businessName,
+        businessType,
+        password,
+    };
+
+    // Create XMLHttpRequest object
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "validate_form.php", true); // Replace "validate_form.php" with your server-side validation script
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    // Handle the server response
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+
+            if (response.success) {
+                alert("Form validated successfully!");
+                // Optionally, you can submit the form programmatically
+                document.getElementById("registration-form").submit();
+            } else {
+                alert(response.error || "Validation failed. Please check your inputs.");
+            }
+        }
+    };
+
+    // Send form data as JSON
+    xhr.send(JSON.stringify(formData));
+
+    // Prevent default form submission while AJAX request is processed
+    return false;
 }

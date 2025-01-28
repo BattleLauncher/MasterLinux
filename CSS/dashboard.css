@@ -185,8 +185,8 @@ button:hover {
 
 /* Profile Picture styling */
 .profile-pic {
-    width: 100%; /* Ensures the image fills the container */
-    height: 100%; /* Ensures the image fills the container */
+    width: 200%; /* Ensures the image fills the container */
+    height: 200%; /* Ensures the image fills the container */
     object-fit: cover; /* Ensures the image covers the area while maintaining its aspect ratio */
 }
 
