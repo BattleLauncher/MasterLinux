@@ -14,7 +14,7 @@
         <p>Please choose your role to proceed to the login page.</p>
         <div>
             <!-- Admin Login -->
-            <a href="">
+            <a href="../admin/view/login.php">
                 <h2>Admin</h2>
             </a>
 

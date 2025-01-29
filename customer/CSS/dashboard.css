@@ -172,9 +172,9 @@ button:hover {
 
 /* Profile Picture container */
 .profile-pic-container {
-    width: 100px; /* Set the width to a larger size for better visibility */
-    height: 100px; /* Set the height to match the width */
-    border-radius: 50%; /* Makes the container circular */
+    width: 150px; /* Increased width for a larger profile picture */
+    height: 150px; /* Match the height to the width */
+    border-radius: 50%; /* Keeps the container circular */
     overflow: hidden; /* Ensures the image fits within the container */
     display: flex;
     justify-content: center;
@@ -189,4 +189,5 @@ button:hover {
     height: 100%; /* Ensures the image fills the container */
     object-fit: cover; /* Ensures the image covers the area while maintaining its aspect ratio */
 }
+
 
