@@ -6,7 +6,7 @@ class GetData
         $DBHostname = "localhost";
         $DBUsername = "root";
         $DBPassword = "";
-        $DBname = "mydatabase";
+        $DBname = "database";
         $connectionObject = new mysqli($DBHostname, $DBUsername, $DBPassword, $DBname);
         
         if ($connectionObject->connect_error) {
