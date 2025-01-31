@@ -1,0 +1,122 @@
+[
+    {
+        "first_name": "Emon",
+        "last_name": "hossen",
+        "gender": "male",
+        "age": 24,
+        "email": "emon2k02@gmail.com",
+        "phone": "01345678921",
+        "admin_role": "super-admin",
+        "password": "$2y$10$ck0LGIAXnuNdLSZXMZqg0u6dtpa5Dg0\/2SZu4nwhk\/g1stYEhg1rq"
+    },
+    {
+        "first_name": "Emon",
+        "last_name": "hossen",
+        "gender": "male",
+        "age": 24,
+        "email": "emon2k02@gmail.com",
+        "phone": "01345678921",
+        "admin_role": "super-admin",
+        "password": "12"
+    },
+    {
+        "first_name": "Emon",
+        "last_name": "hossen",
+        "gender": "male",
+        "age": 24,
+        "email": "emon2k02@gmail.com",
+        "phone": "01345678921",
+        "admin_role": "super-admin",
+        "password": "12"
+    },
+    {
+        "first_name": "Emon",
+        "last_name": "hossen",
+        "gender": "male",
+        "age": 24,
+        "email": "emon2k02@gmail.com",
+        "phone": "01345678921",
+        "admin_role": "super-admin",
+        "password": "1234"
+    },
+    {
+        "first_name": "Emon",
+        "last_name": "hossen",
+        "gender": "male",
+        "age": 24,
+        "email": "emon2k02@gmail.com",
+        "phone": "01345678921",
+        "admin_role": "super-admin",
+        "password": "1234"
+    },
+    {
+        "first_name": "Emon",
+        "last_name": "hossen",
+        "gender": "male",
+        "age": 24,
+        "email": "emon2k02@gmail.com",
+        "phone": "01345678921",
+        "admin_role": "super-admin",
+        "password": "1234"
+    },
+    {
+        "first_name": "Emon",
+        "last_name": "hossen",
+        "gender": "male",
+        "age": 24,
+        "email": "emon2k02@gmail.com",
+        "phone": "01345678921",
+        "admin_role": "super-admin",
+        "password": "1234"
+    },
+    {
+        "first_name": "Mahhi",
+        "last_name": "Sami",
+        "gender": "male",
+        "age": 23,
+        "email": "emon2k02@gmail.com",
+        "phone": "01752153370",
+        "admin_role": "moderator",
+        "password": "EmOn2829"
+    },
+    {
+        "first_name": "Emon",
+        "last_name": "Hossen",
+        "gender": "male",
+        "age": 18,
+        "email": "emon2k02@gmail.com",
+        "phone": "01752153370",
+        "admin_role": "super-admin",
+        "password": "123456"
+    },
+    {
+        "first_name": "Emon",
+        "last_name": "Hossen",
+        "gender": "male",
+        "age": 18,
+        "email": "emon2k02@gmail.com",
+        "phone": "01345678921",
+        "admin_role": "admin",
+        "password": "1234"
+    },
+    {
+        "first_name": "Emon",
+        "last_name": "Hossen",
+        "gender": "male",
+        "age": 18,
+        "email": "emon2k02@gmail.com",
+        "phone": "01345678921",
+        "admin_role": "admin",
+        "password": "12345"
+    },
+    {
+        "first_name": "Emon",
+        "last_name": "Hossen",
+        "gender": "male",
+        "age": 18,
+        "email": "emon2k02@gmail.com",
+        "phone": "01345678921",
+        "admin_role": "admin",
+        "password": "12345"
+    }
+]

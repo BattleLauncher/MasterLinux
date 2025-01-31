@@ -1,0 +1,99 @@
+/* General Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9fcfe; /* Light gray background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+}
+.login-form {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to the top */
+    min-height: 80vh; /* Ensure it spans the viewport height */
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in height calculations */
+}
+.container {
+    width: 90%;
+    max-width: 1500px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Center horizontally */
+}
+
+/* Form Header */
+.login-form-header {
+    margin-bottom: 20px;
+}
+
+.login-form-header h1 {
+    font-size: 28px;
+    color: #333;
+    margin: 0;
+    font-weight: 600; /* Make the header bold */
+    text-align: center; /* Center the header text */
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #6c757d; /* Darker text for better contrast */
+    display: block;
+    margin-bottom: 8px;
+    text-align: left; /* Align label to the left */
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    color: #495057; /* Dark text */
+    border: 1px solid #ced4da;
+    border-radius: 8px; /* Slightly more rounded corners */
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    text-align: center; /* Center input text */
+}
+
+.form-group input:focus {
+    border-color: #28a745; /* Green border on focus */
+    outline: none; /* Remove the default outline */
+}
+
+/* Green Login Button */
+.btn-login {
+    width: 100%; /* Full width */
+    padding: 12px;
+    background-color: #28a745; /* Green color */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: block;
+    margin-top: 20px; /* Space above the button */
+    text-align: center; /* Center text in button */
+}
+
+.btn-login:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: translateY(-2px); /* Slight hover effect */
+}
+
+.btn-login:active {
+    transform: translateY(0); /* Remove hover effect on click */
+}

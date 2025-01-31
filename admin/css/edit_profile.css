@@ -1,0 +1,79 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Form Container */
+form {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+}
+
+/* Headings */
+h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Input Fields */
+.input, .input_box {
+    width: 90%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.input:focus, .input_box:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* Error Messages */
+.error {
+    color: red;
+    font-size: 12px;
+    text-align: left;
+    padding-left: 10px;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Update Button */
+.submit {
+    background-color: #007BFF;
+    color: white;
+}
+
+.submit:hover {
+    background-color: #0056b3;
+}
+
+/* Cancel Button */
+.cancel {
+    background-color: #dc3545;
+    color: white;
+}
+
+.cancel:hover {
+    background-color: #a71d2a;
+}
