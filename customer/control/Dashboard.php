@@ -16,11 +16,12 @@ $database = new Database();
 $db = $database->getConnection();
 
 // Fetch user data
-$query = "SELECT * FROM customer WHERE id = :id LIMIT 1";
+$query = "SELECT * FROM customer WHERE id = ? LIMIT 1";
 $stmt = $db->prepare($query);
-$stmt->bindParam(':id', $_SESSION['user_id']);
+$stmt->bind_param('i', $_SESSION['user_id']);
 $stmt->execute();
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
 
 // Check if user data is retrieved successfully
 if ($user) {
