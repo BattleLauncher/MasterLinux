@@ -1,0 +1,146 @@
+/* RESET & BASE STYLES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #0d90ed, rgb(192, 253, 161));
+}
+
+/* CONTAINER */
+.container {
+    background: #c9eaf9;
+    width: 450px;
+    padding: 1rem;
+    margin: 30px auto;
+    border-radius: 10px;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
+}
+
+/* FORM TITLE */
+.form-tittle {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 1.3rem 0;
+    margin-bottom: 0.4rem;
+}
+
+/* INPUT GROUP */
+.input-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.input-group i {
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: black;
+}
+
+input {
+    width: 100%;
+    padding: 0.6rem 0.5rem 0.6rem 2.2rem; /* space for icon */
+    font-size: 1rem;
+    border: none;
+    border-bottom: 1px solid #757575;
+    background-color: transparent;
+    color: inherit;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-bottom: 2px solid hsl(192, 96%, 50%);
+}
+
+input::placeholder {
+    color: transparent;
+}
+
+input:focus ~ label, input:not(:placeholder-shown) ~ label { top: -0.5rem; font-size: 0.55rem; color: hsl(192, 96%, 50%); }
+label { color: rgb(20, 2, 2); position: absolute; left: 2.2rem; top: 0.5rem; cursor: text; font-size: 0.7rem; transition: 0.3s ease all; }
+/* SELECT GROUP WITH ICON */
+.select-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.2rem;
+}
+
+
+.select-group i {
+    position: absolute;
+    left: 0.5rem;
+    font-size: 1.2rem;
+    color: black;
+}
+
+.select-group select {
+    width: 100%;
+    padding: 0.5rem 0.5rem 0.5rem 2.2rem; /* padding-left for icon space */
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: transparent;
+    color: black;        /* text color */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.select-group select:focus {
+    outline: none;
+    border-color: #0d90ed;
+    box-shadow: 0 0 5px rgba(13, 16, 19, 0.4);
+    background: white;  /* remain white on focus */
+}
+
+
+/* BUTTONS */
+.btn {
+    font-size: 1.1rem;
+    padding: 0.6rem 1rem;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    display: block;
+    margin: 1.2rem auto;
+    background: #0d90ed;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #0a6bb5;
+}
+
+button {
+    color: rgb(124, 10, 225);
+    border: none;
+    background-color: transparent;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+button:hover {
+    text-decoration: underline;
+    color: indianred;
+}
+
+/* LINKS & ICONS */
+.links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+

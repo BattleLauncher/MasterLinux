@@ -1,0 +1,7 @@
+The project contain 4 user 
+1. Customer
+2. Admin
+3. Employee
+4. Promoter
+
+concept: The website works as a bridge between the promoter and customer where they can easily promote their product or business. We are 	 trying give space the customer choice their promoter but the final result or analysis will be given from us what is better for 	 their own perspective.

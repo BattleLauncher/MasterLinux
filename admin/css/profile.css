@@ -1,0 +1,96 @@
+    /* Base body style */
+    body {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #e0f7fa, #d0f4f7);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding-top: 60px;
+      color: #0f172a;
+    }
+
+    /* Main container */
+    .container {
+      background: #fff;
+      padding: 40px 50px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 900px; /* increased width */
+      width: 90%;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .container h1 {
+      margin: 0 0 15px;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .container p {
+      margin: 0 0 25px;
+      font-size: 1.1rem;
+      color: #475569;
+    }
+
+    .container .description {
+      font-size: 0.95rem;
+      color: #64748b;
+      margin-bottom: 30px;
+    }
+
+    .hr {
+      height: 1px;
+      background: rgba(0,0,0,0.08);
+      margin: 25px 0;
+    }
+
+    /* Actions buttons */
+    .actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .actions a {
+      padding: 12px 22px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .actions a.logout {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .actions a.logout:hover {
+      background: #fca5a5;
+    }
+
+    .actions a.btn {
+      background: #2563eb;
+      color: #fff;
+      border: 1px solid #1d4ed8;
+    }
+
+    .actions a.btn:hover {
+      background: #1d4ed8;
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-20px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+
+    @media(max-width: 600px){
+      .container { padding: 30px 20px; }
+      .actions a { width: 100%; text-align: center; }
+    }
